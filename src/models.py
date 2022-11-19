@@ -31,8 +31,8 @@ class Post(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     photo = Column(String(250))
     description = Column(String(250))
-    create_at = Column(String(250))
-    update_at = Column(String(250))
+    created = Column(String(250))
+    updated = Column(String(250))
     followers = relationship(User)
 
 class Comments(Base):
@@ -41,8 +41,8 @@ class Comments(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     post_id = Column(Integer, ForeignKey('post.id'))
     content = Column(String(250))
-    create_at= Column(String(250))
-    update_at= Column(String(250))
+    created= Column(String(250))
+    updated= Column(String(250))
     comments = relationship(User)
     comments = relationship(Post)
 
