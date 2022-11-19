@@ -11,37 +11,47 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
-    user_name = Column(String(250),primary_key=True)
     name = Column(String(250))
-    firstname = Column(String(250))
-    lastname = Column(String(250))
+    user_name = Column(String(250),primary_key=True)
     email = Column(String(250))
+    password= Column(String(250))
     
 
-class Favorites(Base):
-    __tablename__ = 'favorites'
+class Followers(Base):
+    __tablename__ = 'followers'
     id = Column(Integer, primary_key=True)
-    planets_id = Column(Integer, ForeignKey('planets.id'))
-    people_id = Column(Integer, ForeignKey('people.id'))
+    followers_id = Column(Integer, ForeignKey('user.id'))
     user_id = Column(Integer, ForeignKey('user.id'))
-    favorites = relationship(User)
+    status = Column(String(250))
+    followers = relationship(User)
 
-class People(Base):
-    __tablename__ = 'people'
+class Post(Base):
+    __tablename__ = 'post'
     id = Column(Integer, primary_key=True)
-    name = Column(String(250))
-    last_name = Column(String(250))
-    details = Column(String(250))
-    people = relationship(Favorites)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    photo = Column(String(250))
+    description = Column(String(250))
+    create_at = Column(String(250))
+    update_at = Column(String(250))
+    followers = relationship(User)
 
-
-class Planets(Base):
-    __tablename__ = 'planets'
+class Comments(Base):
+    __tablename__ = 'comments'
     id = Column(Integer, primary_key=True)
-    name_planet = Column(String(250))
-    details_planet = Column(String(250))
-    planets = relationship(Favorites)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    post_id = Column(Integer, ForeignKey('post.id'))
+    content = Column(String(250))
+    create_at= Column(String(250))
+    update_at= Column(String(250))
+    comments = relationship(User)
+    comments = relationship(Post)
 
+class Likes(Base):
+    __tablename__ = 'likes'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    post_id = Column(Integer, ForeignKey('post.id'))
+    likes = relationship(User)
     
 
 
