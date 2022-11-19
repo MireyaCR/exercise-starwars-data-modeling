@@ -1,10 +1,12 @@
 import os
 import sys
-from sqlalchemy import Column, ForeignKey, Integer, String
+import enum
+from sqlalchemy import Column, ForeignKey, Integer, String, Enum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 from eralchemy2 import render_er
+
 
 Base = declarative_base()
 
@@ -25,6 +27,11 @@ class Followers(Base):
     status = Column(String(250))
     followers = relationship(User)
 
+class Media(enum.Enum):
+    photo = 'photo'
+    pictures = 'pictures'
+    video = 'video'
+    
 class Post(Base):
     __tablename__ = 'post'
     id = Column(Integer, primary_key=True)
@@ -33,6 +40,7 @@ class Post(Base):
     description = Column(String(250))
     created = Column(String(250))
     updated = Column(String(250))
+    types= Column(Enum(Media))
     followers = relationship(User)
 
 class Comments(Base):
@@ -52,6 +60,8 @@ class Likes(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     post_id = Column(Integer, ForeignKey('post.id'))
     likes = relationship(User)
+    
+
     
 
 
